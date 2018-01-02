@@ -15,11 +15,9 @@ namespace NSCalendarAPI.Repository
           
         }
 
-        public async Task<IEnumerable<Game>> ObterGamesOrdenados()
+        public override IEnumerable<Game> ObterTodos()
         {
-            var games = await Task.Run(() => _liteRepository.Query<Game>().ToEnumerable().OrderBy(x=> x.DataLancamento));
-            return games;
+            return base.ObterTodos().OrderBy(x => x.DataLancamento);
         }
-
     }
 }

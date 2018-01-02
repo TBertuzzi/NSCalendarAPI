@@ -28,25 +28,37 @@ namespace NSCalendarAPI.Controllers
 
             if (!Seguranca.VerificaChave(chave)) return Unauthorized();
 
-            var games = await _gameService.ObterGamesOrdenados();
+            var games = await _gameService.ObterGames();
 
-            if (games == null)
-                return NotFound();
+            if (games == null) return NotFound();
 
             return Ok(games);
         }
 
         [HttpPost("{chave}")]
-        public ActionResult Post(string chave, [FromBody]Game game)
+        public async Task<ActionResult> Post(string chave, [FromBody]Game game)
         {
             if (string.IsNullOrEmpty(chave)) return BadRequest();
 
             if (!Seguranca.VerificaChave(chave)) return Unauthorized();
 
-            _gameService.InserirGame(game);
+            await _gameService.InserirGame(game);
 
             return Ok();
         }
 
+        [HttpPut("{chave}")]
+        public async Task<ActionResult> Put(string chave, [FromBody]Game game)
+        {
+            if (string.IsNullOrEmpty(chave)) return BadRequest();
+
+            if (!Seguranca.VerificaChave(chave)) return Unauthorized();
+
+            if (game.Id == 0) return NotFound();
+
+            await _gameService.AtualizarGame(game);
+
+            return Ok();
+        }
     }
 }

@@ -18,23 +18,23 @@ namespace NSCalendarAPI.Repository
             _liteRepository = new LiteRepository(Constantes.DBName);
         }
 
-        public IEnumerable<T> ObterTodos()
+        public virtual IEnumerable<T> ObterTodos()
         {
             var games = _liteRepository.Query<T>().ToEnumerable();
             return games;
         }
 
-        public void Inserir(T item)
+        public virtual void Inserir(T item)
         {
             _liteRepository.Insert<T>(item);
         }
 
-        public void Atualizar(T item)
+        public virtual void Atualizar(T item)
         {
             _liteRepository.Update<T>(item);
         }
 
-        public T ObterPorID(int id)
+        public virtual T ObterPorID(int id)
         {
             var game = _liteRepository.Query<T>().Where(x => x.Id == id).ToEnumerable().FirstOrDefault();
             return game;
