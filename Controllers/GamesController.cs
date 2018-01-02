@@ -38,7 +38,7 @@ namespace NSCalendarAPI.Controllers
         [HttpPost("{chave}")]
         public async Task<ActionResult> Post(string chave, [FromBody]Game game)
         {
-            if (string.IsNullOrEmpty(chave)) return BadRequest();
+            if (string.IsNullOrEmpty(chave) || game == null) return BadRequest();
 
             if (!Seguranca.VerificaChave(chave)) return Unauthorized();
 
@@ -50,7 +50,7 @@ namespace NSCalendarAPI.Controllers
         [HttpPut("{chave}")]
         public async Task<ActionResult> Put(string chave, [FromBody]Game game)
         {
-            if (string.IsNullOrEmpty(chave)) return BadRequest();
+            if (string.IsNullOrEmpty(chave) || game == null) return BadRequest();
 
             if (!Seguranca.VerificaChave(chave)) return Unauthorized();
 
