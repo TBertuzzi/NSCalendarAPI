@@ -10,21 +10,10 @@ namespace NSCalendarAPI.Services
 {
     public class GameService
     {
-        internal async Task<IEnumerable<Game>> ObterGames()
+        internal IEnumerable<Game> ObterGames()
         {
             GameRepository gameRepository = new GameRepository();
-
-            //Game Teste = new Game();
-            //Teste.Id = 1;
-            //Teste.IdGame = 1;
-            //Teste.ImgUrl = "";
-            //Teste.Lancado = true;
-            //Teste.Nome = "TESTE";
-            //gameRepository.Inserir(Teste);
-
-
-          
-            return await gameRepository.ObterTodos();
+            return  gameRepository.ObterTodos();
         }
 
         internal void InserirGame(Game game)
@@ -32,5 +21,13 @@ namespace NSCalendarAPI.Services
             GameRepository gameRepository = new GameRepository();
             gameRepository.Inserir(game);
         }
+
+        internal async Task<IEnumerable<Game>> ObterGamesOrdenados()
+        {
+            GameRepository gameRepository = new GameRepository();
+            return await gameRepository.ObterGamesOrdenados();
+        }
+
+        
     }
 }

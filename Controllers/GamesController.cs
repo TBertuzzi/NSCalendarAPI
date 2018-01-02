@@ -21,16 +21,14 @@ namespace NSCalendarAPI.Controllers
             _gameService = new GameService();
         }
 
-        // GET games/values
         [HttpGet("{chave}")]
-        // public IEnumerable<Game> Get(string key)
         public async Task<ActionResult> Get(string chave)
         {
             if (string.IsNullOrEmpty(chave)) return BadRequest();
 
             if (!Seguranca.VerificaChave(chave)) return Unauthorized();
 
-            var games = await _gameService.ObterGames();
+            var games = await _gameService.ObterGamesOrdenados();
 
             if (games == null)
                 return NotFound();

@@ -8,65 +8,18 @@ using System.Threading.Tasks;
 
 namespace NSCalendarAPI.Repository
 {
-    public class GameRepository
+    public class GameRepository : LiteDBConnection<Game>
     {
-        LiteDBConnection<Game> _liteDBConnection;
         public GameRepository()
         {
-            _liteDBConnection = new LiteDBConnection<Game>();
+          
         }
 
-        public async Task<IEnumerable<Game>> ObterTodos()
+        public async Task<IEnumerable<Game>> ObterGamesOrdenados()
         {
-
-            return await _liteDBConnection.ObterTodos("DataLancamento");
-            //using (var db = new LiteDatabase(Constantes.DBName))
-            //{
-            //    // Get Games
-            //    var games = db.GetCollection<Game>("games");
-
-            //    // Index document using a document property
-            //    games.EnsureIndex(x => x.DataLancamento);
-
-            //    // Use Linq to query documents
-            //    return games.FindAll();
-            //}
+            var games = await Task.Run(() => _liteRepository.Query<Game>().ToEnumerable().OrderBy(x=> x.DataLancamento));
+            return games;
         }
 
-        public void Inserir(Game game)
-        {
-            _liteDBConnection.Inserir(game);
-            //using (var db = new LiteDatabase(Constantes.DBName))
-            //{
-            //    // Get Games
-            //    var games = db.GetCollection<Game>("games");
-
-            //    games.Insert(game);
-            //}
-        }
-
-        public void Atualizar(Game game)
-        {
-            _liteDBConnection.Atualizar(game);
-            //using (var db = new LiteDatabase(Constantes.DBName))
-            //{
-            //    // Get Games
-            //    var games = db.GetCollection<Game>("games");
-
-            //    games.Update(game);
-            //}
-        }
-
-        public Game ObterPorID(int id)
-        {
-            return _liteDBConnection.ObterPorID(id);
-            //using (var db = new LiteDatabase(Constantes.DBName))
-            //{
-            //    // Get Games
-            //    var games = db.GetCollection<Game>("games");
-
-            //    return games.Find(x => x.Id == Id).FirstOrDefault();
-            //}
-        }
     }
 }
