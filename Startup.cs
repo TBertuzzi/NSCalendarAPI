@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using NSCalendarAPI.Services;
+using NSCalendarAPI.Repository;
 
 namespace NSCalendarAPI
 {
@@ -23,26 +25,25 @@ namespace NSCalendarAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // services.AddMvc();
+            // services.AddMvc(); //Retirei para usar o do CORE
 
             services
         .AddMvcCore(options =>
         {
             options.RequireHttpsPermanent = true; // does not affect api requests
             options.RespectBrowserAcceptHeader = true; // false by default
-            //options.OutputFormatters.RemoveType<HttpNoContentOutputFormatter>();
-
-            //remove these two below, but added so you know where to place them...
  
         })
-        //.AddApiExplorer()
-        //.AddAuthorization()
         .AddFormatterMappings()
-        //.AddCacheTagHelper()
-        //.AddDataAnnotations()
-        //.AddCors()
-        .AddJsonFormatters(); // JSON, or you can build your own custom one (above)
+        .AddJsonFormatters(); // JSON, pode ser adicionado um formato customizavel
+
+            //Instancia uma dependencia por transação
+            services.AddTransient<GameService>(); 
+            services.AddTransient<ScreenshotService>();
+            services.AddTransient<ScreenshotRepository>();
+            services.AddTransient<GameRepository>();
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

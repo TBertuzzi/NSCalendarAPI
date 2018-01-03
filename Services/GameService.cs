@@ -10,10 +10,10 @@ namespace NSCalendarAPI.Services
 {
     public class GameService
     {
-        GameRepository _gameRepository;
-        public GameService ()
+        private readonly GameRepository _gameRepository;
+        public GameService (GameRepository gameRepository)
         {
-            _gameRepository = new GameRepository();
+            _gameRepository = gameRepository;
         }
 
         internal async Task InserirGame(Game game)

@@ -16,9 +16,9 @@ namespace NSCalendarAPI.Controllers
     {
         private readonly GameService _gameService;
 
-        public GamesController()
+        public GamesController(GameService gameService)
         {
-            _gameService = new GameService();
+            _gameService = gameService;
         }
 
         [HttpGet("{chave}")]
